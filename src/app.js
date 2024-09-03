@@ -1,5 +1,6 @@
 import express from "express"
 import cors from "cors"
+import userRouter from "./routes/user.route.js"
 
 const app = express()
 
@@ -15,7 +16,6 @@ app.use(express.urlencoded({extended: true, limit: "16kb"}))
 
 // user routes
 
-import userRouter from "./routes/user.route.js"
 
 app.use('/api/v1/users', userRouter)
 
