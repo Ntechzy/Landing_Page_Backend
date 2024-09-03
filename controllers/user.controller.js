@@ -7,9 +7,9 @@ const test = async (req, res) =>{
 
 const registerUser = async (req, res) =>{
     try {
-        const {name, contact_number, email, neetScore} = req.body;
+        const {name, contact_number, email, neetScore, neetAIR, state, district, course} = req.body;
 
-        if([name, email, contact_number, neetScore].some((field) => field === "")){
+        if([name, email, contact_number, neetScore, neetAIR, state, district, course].some((field) => field === "")){
             return res.status(400).json({msg: "Fields cannot be empty"})
         }
 
@@ -19,11 +19,15 @@ const registerUser = async (req, res) =>{
         }
 
         const createdUser = await User.create({
-            name: name,
-            contact_number: contact_number,
-            email: email,
-            neetScore: neetScore
-        })
+            name,
+            contact_number,
+            email,
+            neetScore,
+            neetAIR,
+            state,
+            district,
+            course
+        });
 
         if(!createdUser){
             return res.status(500).json({msg: "Something went wrong while creating user"})
@@ -32,7 +36,7 @@ const registerUser = async (req, res) =>{
         return res.status(200).json({data: createdUser, msg: "You have successfully registered"})
         
     } catch (error) {
-        return res.status(500).json({ msg: "Error:", error: error?.message });
+        return res.status(500).json({ msg: error.message });
     }
 }
 
